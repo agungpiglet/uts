@@ -1,0 +1,25 @@
+{
+  "name": "utspemrog",
+  "version": "1.0.0",
+  "description": "uts",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/agungpiglet/uts.git"
+  },
+  "keywords": [
+    "rest",
+    "api",
+    "node",
+    "js"
+  ],
+  "author": "agung",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/agungpiglet/uts/issues"
+  },
+  "homepage": "https://github.com/agungpiglet/uts#readme"
+}
