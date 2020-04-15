@@ -18,4 +18,6 @@ module.exports = function (app) {
     app.route('/ubahmontir')
         .put(jsonku.ubahdatamontir)
 
+    app.route('/hapusmontir')
+        .delete(jsonku.hapusdatamontir);
     }

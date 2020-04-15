@@ -62,3 +62,17 @@ exports.tampilberdasarkanid = function(req,res){
             }
         });
     }
+
+
+
+exports.hapusdatamontir = function(req,res){
+    var id = req.body.id_montir;
+    connection.query('DELETE FROM t_montir WHERE id_montir=?',[id],
+        function (error,rows,fields){
+            if(error){
+                console.log(error);
+            }else{
+                response.ok("Berhasil menghapus data",res)
+            }
+        });
+}
