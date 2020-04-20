@@ -9,6 +9,12 @@ module.exports = function (app) {
     app.route('/tampil')
         .get(jsonku.tampilsemuadata);
 
+    app.route('/tampilsparepart')
+        .get(jsonku.tampildatasparepart);
+    
+    app.route('/tampilmontir')
+        .get(jsonku.tampildatamontir);
+
     app.route('/tampil/:id')
         .get(jsonku.tampilberdasarkanid);
 
@@ -20,4 +26,7 @@ module.exports = function (app) {
 
     app.route('/hapusmontir')
         .delete(jsonku.hapusdatamontir);
+
+    app.route('/tampildataadmin')
+        .get(jsonku.tampildataadmin);
     }
