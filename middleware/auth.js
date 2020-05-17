@@ -7,7 +7,7 @@ var config = require('../config/secret');
 var ip = require('ip');
 
 //controller untuk register
-exports.registrasi = function(req,res){
+exports.registrasi = function (req, res) {
     var post = {
         nama_user: req.body.nama_user,
         email: req.body.email,
@@ -17,59 +17,59 @@ exports.registrasi = function(req,res){
     }
 
     var query = "SELECT email FROM ?? WHERE ??=?";
-    var table = ["t_user","email", post.email];
+    var table = ["t_user", "email", post.email];
 
-    query = mysql.format(query,table);
+    query = mysql.format(query, table);
 
-    connection.query(query, function(error, rows) {
-        if(error){
+    connection.query(query, function (error, rows) {
+        if (error) {
             console.log(error);
 
-        }else {
-            if(rows.length == 0){
+        } else {
+            if (rows.length == 0) {
                 var query = "INSERT INTO ?? SET ?";
                 var table = ["t_user"];
-                query = mysql.format(query,table);
-                connection.query(query, post, function(error, rows){
-                    if(error){
+                query = mysql.format(query, table);
+                connection.query(query, post, function (error, rows) {
+                    if (error) {
                         console.log(error);
-                        
-                    }else {
-                        response.ok("Berhasil Menambahkan data user baru",res);
+
+                    } else {
+                        response.ok("Berhasil Menambahkan data user baru", res);
 
                     }
                 });
-            }else {
-                response.ok("Email sudah tedaftar!",res);
+            } else {
+                response.ok("Email sudah tedaftar!", res);
             }
         }
     })
 }
 
 //controller untuk login
-exports.login = function(req,res){
+exports.login = function (req, res) {
     var post = {
-    password: req.body.password,
-    email: req.body.email
+        password: req.body.password,
+        email: req.body.email
     }
 
     var query = "SELECT * FROM ?? WHERE ??=? AND ??=?";
     var table = ["t_user", "password", md5(post.password), "email", post.email];
 
-    query = mysql.format(query,table);
-    connection.query(query, function(error, rows){
-        if(error){
+    query = mysql.format(query, table);
+    connection.query(query, function (error, rows) {
+        if (error) {
             console.log(error);
-        }else {
-            if(rows.length == 1){
-                var token = jwt.sign({rows}, config.secret, {
+        } else {
+            if (rows.length == 1) {
+                var token = jwt.sign({ rows }, config.secret, {
                     expiresIn: 1440
                 });
                 id_user = rows[0].id_user;
 
                 var data = {
                     id_user: id_user,
-                    access_token: token,
+                    akses_token: token,
                     ip_address: ip.address()
                 }
 
@@ -77,21 +77,25 @@ exports.login = function(req,res){
                 var table = ["t_level"];
 
                 query = mysql.format(query, table);
-                connection.query(query, data , function(error, rows){
-                    if(error){
+                connection.query(query, data, function (error, rows) {
+                    if (error) {
                         console.log(error);
-                    }else {
+                    } else {
                         res.json({
                             success: true,
                             message: "Token JWT Tergenerate!",
-                            token:token,
+                            token: token,
                             currUser: data.id_user
                         });
                     }
                 });
-            }else {
-                res.json({"Error": true, "Message":"Email atau password salah!"});
+            } else {
+                res.json({ "Error": true, "Message": "Email atau password salah!" });
             }
         }
     });
+}
+
+exports.halamanrahasia = function(req,res){
+    response.ok("Halaman ini hanya untuk user dengan role = 2!",res);
 }
